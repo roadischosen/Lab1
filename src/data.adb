@@ -54,21 +54,30 @@ package body Data is
       end loop;
    end Randomize_Vector;
 
-   procedure Put_Matrix ( Matrix : in Real_Matrix ) is
+   procedure Put_Matrix ( Matrix : in Real_Matrix; Max : in Natural ) is
+      Count : Natural := 0;
    begin
+      Outer:
       for I in Matrix'Range (1) loop
          for J in Matrix'Range (2) loop
             Put (Float'Image (Float (Matrix (I, J))));
+            Count := Count + 1;
+            exit Outer when Count >= Max;
          end loop;
          New_Line;
-      end loop;
+      end loop Outer;
+      New_Line;
    end Put_Matrix;
 
-   procedure Put_Vector ( Vector : in Real_Vector ) is
+   procedure Put_Vector ( Vector : in Real_Vector; Max : in Natural ) is
+      Count : Natural := 0;
    begin
       for I in Vector'Range (1) loop
          Put (Float'Image (Float (Vector (I))));
+         Count := Count + 1;
+         exit when Count >= Max;
       end loop;
+     New_Line;
    end Put_Vector;
 
 begin

@@ -11,8 +11,8 @@ package Data is
    function Func2 return Real_Matrix;
    function Func3 return Real_Vector;
 
-   procedure Put_Matrix ( Matrix : in Real_Matrix );
-   procedure Put_Vector ( Vector : in Real_Vector );
+   procedure Put_Matrix ( Matrix : in Real_Matrix; Max : in Natural );
+   procedure Put_Vector ( Vector : in Real_Vector; Max : in Natural );
 
 private
    Gen : Generator;
