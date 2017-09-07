@@ -60,15 +60,16 @@ procedure Lab1 is
    end tasks;
 
 begin
+   Put_line(Integer'Image(Integer'Size));
+   Put_line(Integer'Image(Integer'Last));
+   --tasks;
 
-   tasks;
+   --Put_Line("Task 1 result: " & Float'Image (Result_Float));
 
-   Put_Line("Task 1 result: " & Float'Image (Result_Float));
+   --Put_Line("Task 2 results are cut:");
+   --Put_Matrix(Result_Matrix, 5);
 
-   Put_Line("Task 2 results are cut:");
-   Put_Matrix(Result_Matrix, 5);
-
-   Put_Line("Task 3 results are cut:");
-   Put_Vector(Result_Vector, 5);
+   --Put_Line("Task 3 results are cut:");
+   --Put_Vector(Result_Vector, 5);
 
 end Lab1;
