@@ -14,19 +14,19 @@ procedure Lab1 is
       task T1 is
          pragma Priority(1);
          pragma Storage_Size(1_000_000);
-         pragma CPU(0);
+         pragma CPU(1);
       end;
 
       task T2 is
          pragma Priority(2);
          pragma Storage_Size(1_000_000);
-         pragma CPU(1);
+         pragma CPU(2);
       end;
 
       task T3 is
          pragma Priority(3);
          pragma Storage_Size(1_000_000);
-         pragma CPU(2);
+         pragma CPU(3);
       end;
 
       task body T1 is
