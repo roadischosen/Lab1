@@ -1,5 +1,6 @@
 with Ada.Containers.Generic_Array_Sort;
 with Ada.Numerics.Discrete_Random;
+with Ada.Strings.Unbounded; use Ada.Strings.unbounded;
 with Ada.Text_IO; use Ada.Text_IO;
 package body Data is
 
@@ -8,6 +9,7 @@ package body Data is
    subtype Rand_Range is Integer range -100 .. 100;
 
    Dim : constant String := Dimension'Img (2 .. Dimension'Img'Length);
+   New_Line : Character := Character'Val(10);
 
    procedure Sort is new Ada.Containers.Generic_Array_Sort
      (Index_Type   => Integer,
@@ -49,29 +51,49 @@ package body Data is
       end loop;
    end Randomize;
 
-   procedure Put (Matr : in Matrix) is
+   function To_String (Matr : in Matrix) return String is
+      Repr : Unbounded_String;
       Count : Natural := 0;
    begin
       if Max_Output > 0 then
          Outer:
          for I in Matr'Range (1) loop
             for J in Matr'Range (2) loop
-               Put (Integer'Image (Matr (I, J)) & " ");
+               Append (Repr, Integer'Image (Matr (I, J)) & " ");
                Count := Count + 1;
                exit Outer when Count >= Max_Output;
             end loop;
-            New_Line;
+            Append (Repr, New_Line);
          end loop Outer;
-         New_Line;
+         Append (Repr, New_Line);
       else
          for I in Matr'Range (1) loop
             for J in Matr'Range (2) loop
-               Put (Integer'Image (Matr (I, J)) & " ");
+               Append (Repr, Integer'Image (Matr (I, J)) & " ");
             end loop;
-            New_Line;
+            Append (Repr, New_Line);
          end loop;
       end if;
-   end Put;
+      return To_String (Repr);
+   end To_String;
+
+   function To_String (Vect : in Vector) return String is
+      Repr : Unbounded_String;
+      Count : Natural := 0;
+   begin
+      if Max_Output > 0 then
+         for I in Vect'Range (1) loop
+            Append (Repr, Integer'Image (Vect (I)) & " ");
+            Count := Count + 1;
+            exit when Count >= Max_Output;
+         end loop;
+      else
+         for I in Vect'Range (1) loop
+            Append (Repr, Integer'Image (Vect (I)) & " ");
+         end loop;
+      end if;
+      return To_String (Repr);
+   end To_String;
 
    procedure Get (Matr : out Matrix) is
    begin
@@ -88,23 +110,6 @@ package body Data is
          Int_IO.Get (Vect (I));
       end loop;
    end Get;
-
-   procedure Put (Vect : in Vector) is
-      Count : Natural := 0;
-   begin
-      if Max_Output > 0 then
-         for I in Vect'Range (1) loop
-            Put (Integer'Image (Vect (I)) & " ");
-            Count := Count + 1;
-            exit when Count >= Max_Output;
-         end loop;
-      else
-         for I in Vect'Range (1) loop
-            Put (Integer'Image (Vect (I)) & " ");
-         end loop;
-      end if;
-      New_Line;
-   end Put;
 
    function Transpose (X : in Matrix) return Matrix is
       Res : Matrix;      
@@ -201,7 +206,8 @@ package body Data is
          Put_line (Type_Smth("MD", Is_Matrix => True));
          Get (MD);
       end if;
-      Put_line ("Task T1 results: " & Integer'Image ((A * B) + C * (B * (MA * MD))));
+      Put_line ("Task T1 results: " & 
+                Integer'Image ((A * B) + C * (B * (MA * MD))));
    end Func1;
 
    procedure Func2 is
@@ -221,8 +227,8 @@ package body Data is
          Put_line (Type_Smth("MF", Is_Matrix => True));
          Get (MF);
       end if;
-      Put_line ("Task T2 results:");
-      Put (Transpose ( MK ) * (MH * MF));
+      Put_line ("Task T2 results:" & New_Line &
+                To_String (Transpose ( MK ) * (MH * MF)));
    end Func2;
 
    procedure Func3 is
@@ -251,8 +257,8 @@ package body Data is
       O := O + P;
       Sort (O);
 
-      Put_line ("Task T3 results:");
-      Put (O * Transpose ( MR * MS ));
+      Put_line ("Task T3 results:" & New_Line & 
+                To_String (O * Transpose ( MR * MS )));
    end Func3;
 
 begin

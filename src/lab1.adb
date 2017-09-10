@@ -2,7 +2,7 @@ with Data;
 with Ada.Text_IO; use Ada.Text_IO;
 
 procedure Lab1 is
-   N : Integer := 1000;
+   N : Integer := 200;
    package Lab1Data is new Data(N);
    use Lab1Data;
 
