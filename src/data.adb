@@ -178,7 +178,6 @@ package body Data is
    procedure Func1 is
       A, B, C : Vector (0 .. Dimension-1);
       MA, MD : Matrix;
-      Res : Integer;
    begin
       if Generate then
          Randomize (MA);
@@ -202,8 +201,7 @@ package body Data is
          Put_line (Type_Smth("MD", Is_Matrix => True));
          Get (MD);
       end if;
-      Res := (A * B) + C * (B * (MA * MD));
-      Put_line ("Task T1 results: " & Integer'Image (Res));
+      Put_line ("Task T1 results: " & Integer'Image ((A * B) + C * (B * (MA * MD))));
    end Func1;
 
    procedure Func2 is
