@@ -117,7 +117,7 @@ package body Data is
       return Res;
    end Transpose;
 
-   function "*" (Left : Vector; Right : Matrix)
+   function "*" (Left : in Vector; Right : in Matrix)
       return Vector is
       Res : Vector (Left'Range);
       Prod : Integer;
@@ -132,7 +132,7 @@ package body Data is
       return Res;
    end "*";
 
-   function "+" (Left, Right : Vector) return Vector is
+   function "+" (Left, Right : in Vector) return Vector is
       Res : Vector (Left'Range);
    begin
       for I in Left'Range loop
@@ -141,7 +141,7 @@ package body Data is
       return Res;
    end "+";
 
-   function "*" (Left, Right : Vector) return Integer is
+   function "*" (Left, Right : in Vector) return Integer is
       Res : Integer := 0;
    begin
       for I in Left'Range loop
@@ -150,7 +150,7 @@ package body Data is
       return Res;
    end "*";
 
-   function "*" (Left, Right : Matrix) return Matrix is
+   function "*" (Left, Right : in Matrix) return Matrix is
       Res : Matrix;
       Prod : Integer;
    begin
@@ -178,6 +178,7 @@ package body Data is
    procedure Func1 is
       A, B, C : Vector (0 .. Dimension-1);
       MA, MD : Matrix;
+      Res : Integer;
    begin
       if Generate then
          Randomize (MA);
@@ -201,7 +202,8 @@ package body Data is
          Put_line (Type_Smth("MD", Is_Matrix => True));
          Get (MD);
       end if;
-      Put_line ("Task T1 results: " & Integer'Image ((A * B) + (C * (B * (MA * MD)))));
+      Res := (A * B) + C * (B * (MA * MD));
+      Put_line ("Task T1 results: " & Integer'Image (Res));
    end Func1;
 
    procedure Func2 is

@@ -2,29 +2,17 @@ with Data;
 with Ada.Text_IO; use Ada.Text_IO;
 
 procedure Lab1 is
-   N : Integer := 2;
+   N : Integer := 1000;
    package Lab1Data is new Data(N);
    use Lab1Data;
 
    procedure Start is
+
       task T1 is
          pragma Priority(1);
-         pragma Storage_Size(1_000_000);
+         pragma Storage_Size(30_000_000);
          pragma CPU(1);
       end;
-
-      task T2 is
-         pragma Priority(2);
-         pragma Storage_Size(1_000_000);
-         pragma CPU(2);
-      end;
-
-      task T3 is
-         pragma Priority(3);
-         pragma Storage_Size(1_000_000);
-         pragma CPU(3);
-      end;
-
       task body T1 is
       begin
          Put_Line("T1 started");
@@ -34,6 +22,11 @@ procedure Lab1 is
          Put_Line("T1 finished");
       end T1;
 
+      task T2 is
+         pragma Priority(2);
+         pragma Storage_Size(30_000_000);
+         pragma CPU(2);
+      end;
       task body T2 is
       begin
          Put_Line("T2 started");
@@ -42,6 +35,12 @@ procedure Lab1 is
          delay 0.4;
          Put_Line("T2 finished");
       end T2;
+
+      task T3 is
+         pragma Priority(3);
+         pragma Storage_Size(30_000_000);
+         pragma CPU(3);
+      end;
 
       task body T3 is
       begin
