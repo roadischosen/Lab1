@@ -1,8 +1,15 @@
+--------------------------------------------------
+-- Лабораторна робота N1
+-- Процеси в мові Ada. Задачі.
+-- Виконав: Земін В.М. 
+-- Група: ІО-53
+--------------------------------------------------
 with Ada.Containers.Generic_Array_Sort;
 with Ada.Numerics.Discrete_Random;
 with Ada.Strings.Unbounded; use Ada.Strings.unbounded;
 with Ada.Text_IO; use Ada.Text_IO;
 with Ada.IO_Exceptions;
+
 package body Data is
 
    type Vector is array (Integer range <>) of Integer;
@@ -19,6 +26,9 @@ package body Data is
 
    package Int_IO is new Integer_IO (Integer);
 
+   --------------------------------------------------
+   -- Пакет для генерації випадкових цілих чисел
+   --------------------------------------------------
    package RandGen is
       package Rand_Int is new Ada.Numerics.Discrete_Random(Rand_Range);
       Gen : Rand_Int.Generator;
@@ -36,6 +46,10 @@ package body Data is
       Rand_Int.Reset(Gen);
    end RandGen;
 
+   --------------------------------------------------
+   -- Процедури заповнення матриць і векторів
+   -- випадковими значеннями
+   --------------------------------------------------
    procedure Randomize (Matr : out Matrix) is
    begin
       for I in Matr'Range (1) loop
@@ -45,6 +59,7 @@ package body Data is
       end loop;
    end Randomize;
 
+   --------------------------------------------------
    procedure Randomize (Vect : out Vector) is
    begin
       for I in Vect'Range (1) loop
@@ -52,6 +67,9 @@ package body Data is
       end loop;
    end Randomize;
 
+   --------------------------------------------------
+   -- Рядкові представлення векторів і матриць
+   --------------------------------------------------
    function To_String (Matr : in Matrix) return String is
       Repr : Unbounded_String;
       Count : Natural := 0;
@@ -78,6 +96,7 @@ package body Data is
       return To_String (Repr);
    end To_String;
 
+   --------------------------------------------------
    function To_String (Vect : in Vector) return String is
       Repr : Unbounded_String;
       Count : Natural := 0;
@@ -96,6 +115,10 @@ package body Data is
       return To_String (Repr);
    end To_String;
 
+   --------------------------------------------------
+   -- Процедури введення даних із файлу
+   -- в матриці й вектори
+   --------------------------------------------------
    procedure Get (File : in File_Type; Matr : out Matrix) is
       J : Integer;
    begin
@@ -113,6 +136,7 @@ package body Data is
       end loop;
    end Get;
 
+   --------------------------------------------------
    procedure Get (File : in File_Type; Vect : out Vector) is
       J : Integer;
    begin
@@ -128,6 +152,9 @@ package body Data is
       end loop;
    end Get;
 
+   --------------------------------------------------
+   -- Матричні та векторні операції
+   --------------------------------------------------
    function Transpose (X : in Matrix) return Matrix is
       Res : Matrix;      
    begin
@@ -139,6 +166,7 @@ package body Data is
       return Res;
    end Transpose;
 
+   --------------------------------------------------
    function "*" (Left : in Vector; Right : in Matrix)
       return Vector is
       Res : Vector (Left'Range);
@@ -154,6 +182,7 @@ package body Data is
       return Res;
    end "*";
 
+   --------------------------------------------------
    function "+" (Left, Right : in Vector) return Vector is
       Res : Vector (Left'Range);
    begin
@@ -163,6 +192,7 @@ package body Data is
       return Res;
    end "+";
 
+   --------------------------------------------------
    function "*" (Left, Right : in Vector) return Integer is
       Res : Integer := 0;
    begin
@@ -172,6 +202,7 @@ package body Data is
       return Res;
    end "*";
 
+   --------------------------------------------------
    function "*" (Left, Right : in Matrix) return Matrix is
       Res : Matrix;
       Prod : Integer;
@@ -188,15 +219,9 @@ package body Data is
       return Res;
    end "*";
 
-   function Type_Smth (Struct_Name : in String;
-                       Is_Matrix   : in Boolean := False) return String
-   is ("Type " &
-       (if Is_Matrix then "matrix " else "vector ") & 
-       Struct_Name &
-       " (" &  Dim & 
-       (if Is_Matrix then "x" & Dim else "") & 
-       "):");
-
+   --------------------------------------------------
+   -- Основні процедури задач
+   --------------------------------------------------
    procedure Func1 (File_Name : in String) is
       A, B, C : Vector (0 .. Dimension-1);
       MA, MD : Matrix;
@@ -224,6 +249,7 @@ package body Data is
                 Integer'Image ((A * B) + C * (B * (MA * MD))));
    end Func1;
 
+   --------------------------------------------------
    procedure Func2 (File_Name : in String)is
       MK, MH, MF : Matrix;
       File : File_Type;
@@ -246,6 +272,7 @@ package body Data is
                 To_String (Transpose ( MK ) * (MH * MF)));
    end Func2;
 
+   --------------------------------------------------
    procedure Func3 (File_Name : in String) is
       O, P: Vector (0 .. Dimension-1);
       MR, MS : Matrix;
