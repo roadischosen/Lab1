@@ -2,6 +2,7 @@ with Ada.Containers.Generic_Array_Sort;
 with Ada.Numerics.Discrete_Random;
 with Ada.Strings.Unbounded; use Ada.Strings.unbounded;
 with Ada.Text_IO; use Ada.Text_IO;
+with Ada.IO_Exceptions;
 package body Data is
 
    type Vector is array (Integer range <>) of Integer;
@@ -95,19 +96,35 @@ package body Data is
       return To_String (Repr);
    end To_String;
 
-   procedure Get (Matr : out Matrix) is
+   procedure Get (File : in File_Type; Matr : out Matrix) is
+      J : Integer;
    begin
       for I in Matr'Range (1) loop
-         for J in Matr'Range (2) loop
-            Int_IO.Get (Matr (I, J));
+         J := 0;
+         while J <= Matr'Last (2) loop
+            begin
+               Int_IO.Get (File, Matr (I, J));
+               J := J + 1;
+            exception
+               when Ada.IO_Exceptions.Data_Error =>
+                  Skip_Line (File);
+            end;
          end loop;
       end loop;
    end Get;
 
-   procedure Get (Vect : out Vector) is
+   procedure Get (File : in File_Type; Vect : out Vector) is
+      J : Integer;
    begin
-      for I in Vect'Range loop
-         Int_IO.Get (Vect (I));
+      J := 0;
+      while J <= Vect'Last loop
+         begin
+            Int_IO.Get (File, Vect (J));
+            J := J + 1;
+         exception
+            when Ada.IO_Exceptions.Data_Error =>
+               Skip_Line (File);
+         end;
       end loop;
    end Get;
 
@@ -180,9 +197,10 @@ package body Data is
        (if Is_Matrix then "x" & Dim else "") & 
        "):");
 
-   procedure Func1 is
+   procedure Func1 (File_Name : in String) is
       A, B, C : Vector (0 .. Dimension-1);
       MA, MD : Matrix;
+      File : File_Type;
    begin
       if Generate then
          Randomize (MA);
@@ -191,49 +209,47 @@ package body Data is
          Randomize (B);
          Randomize (C);
       else
-         Put_line (Type_Smth("A"));
-         Get (A);
+         Open (File, In_File, File_Name);
 
-         Put_line (Type_Smth("B"));
-         Get (B);
+         Get (File, A);
+         Get (File, B);
+         Get (File, C);
+         Get (File, MA);
+         Get (File, MD);
 
-         Put_line (Type_Smth("C"));
-         Get (C);
-
-         Put_line (Type_Smth("MA", Is_Matrix => True));
-         Get (MA);
-
-         Put_line (Type_Smth("MD", Is_Matrix => True));
-         Get (MD);
+         Close (File);
       end if;
+
       Put_line ("Task T1 results: " & 
                 Integer'Image ((A * B) + C * (B * (MA * MD))));
    end Func1;
 
-   procedure Func2 is
+   procedure Func2 (File_Name : in String)is
       MK, MH, MF : Matrix;
+      File : File_Type;
    begin
       if Generate then
          Randomize (MK);
          Randomize (MH);
          Randomize (MF);
       else
-         Put_line (Type_Smth("MK", Is_Matrix => True));
-         Get (MK);
+         Open (File, In_File, File_Name);
 
-         Put_line (Type_Smth("MH", Is_Matrix => True));
-         Get (MH);
+         Get (File, MK);
+         Get (File, MH);
+         Get (File, MF);
 
-         Put_line (Type_Smth("MF", Is_Matrix => True));
-         Get (MF);
+         Close (File);
       end if;
+
       Put_line ("Task T2 results:" & New_Line &
                 To_String (Transpose ( MK ) * (MH * MF)));
    end Func2;
 
-   procedure Func3 is
+   procedure Func3 (File_Name : in String) is
       O, P: Vector (0 .. Dimension-1);
       MR, MS : Matrix;
+      File : File_Type;
    begin
    if Generate then
          Randomize (MR);
@@ -241,17 +257,14 @@ package body Data is
          Randomize (O);
          Randomize (P);
       else
-         Put_line (Type_Smth("O"));
-         Get (O);
+         Open (File, In_File, File_Name);
 
-         Put_line (Type_Smth("P"));
-         Get (P);
+         Get (File, O);
+         Get (File, P);
+         Get (File, MR);
+         Get (File, MS);
 
-         Put_line (Type_Smth("MR", Is_Matrix => True));
-         Get (MR);
-
-         Put_line (Type_Smth("MS", Is_Matrix => True));
-         Get (MS);
+         Close (File);
       end if;
 
       O := O + P;
@@ -261,6 +274,4 @@ package body Data is
                 To_String (O * Transpose ( MR * MS )));
    end Func3;
 
-begin
-   null;
 end Data;

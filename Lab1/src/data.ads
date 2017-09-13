@@ -6,9 +6,9 @@ generic
 
 package Data is
    
-   procedure Func1;
-   procedure Func2;
-   procedure Func3;
+   procedure Func1 (File_Name : in String);
+   procedure Func2 (File_Name : in String);
+   procedure Func3 (File_Name : in String);
 
 end Data;
 
