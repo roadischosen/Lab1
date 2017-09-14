@@ -1,9 +1,3 @@
---------------------------------------------------
--- Лабораторна робота N1
--- Процеси в мові Ada. Задачі.
--- Виконав: Земін В.М. 
--- Група: ІО-53
---------------------------------------------------
 with Ada.Containers.Generic_Array_Sort;
 with Ada.Numerics.Discrete_Random;
 with Ada.Strings.Unbounded; use Ada.Strings.unbounded;
@@ -12,10 +6,13 @@ with Ada.IO_Exceptions;
 
 package body Data is
 
+   type Vector is array (Integer range <>) of Integer;
+   type Matrix is array (0 .. Dimension-1, 0 .. Dimension-1) of Integer;
    subtype Rand_Range is Integer range -100 .. 100;
 
-   Dim : constant String := Dimension'Img (2 .. Dimension'Img'Length);
    New_Line : Character := Character'Val(10);
+   -- Cut off leading spaces O_o
+   Dim : constant String := Dimension'Img (2 .. Dimension'Img'Length);
 
    procedure Sort is new Ada.Containers.Generic_Array_Sort
      (Index_Type   => Integer,
@@ -24,9 +21,8 @@ package body Data is
 
    package Int_IO is new Integer_IO (Integer);
 
-   --------------------------------------------------
-   -- Пакет для генерації випадкових цілих чисел
-   --------------------------------------------------
+   -- Random integers generation package.
+   -- Saves generator's state between using
    package RandGen is
       package Rand_Int is new Ada.Numerics.Discrete_Random(Rand_Range);
       Gen : Rand_Int.Generator;
@@ -44,10 +40,7 @@ package body Data is
       Rand_Int.Reset(Gen);
    end RandGen;
 
-   --------------------------------------------------
-   -- Процедури заповнення матриць і векторів
-   -- випадковими значеннями
-   --------------------------------------------------
+   -- Random filling for matrixes and vectors
    procedure Randomize (Matr : out Matrix) is
    begin
       for I in Matr'Range (1) loop
@@ -57,7 +50,6 @@ package body Data is
       end loop;
    end Randomize;
 
-   --------------------------------------------------
    procedure Randomize (Vect : out Vector) is
    begin
       for I in Vect'Range (1) loop
@@ -65,9 +57,7 @@ package body Data is
       end loop;
    end Randomize;
 
-   --------------------------------------------------
-   -- Рядкові представлення векторів і матриць
-   --------------------------------------------------
+   -- String representation for matrixes and vectors
    function To_String (Matr : in Matrix) return String is
       Repr : Unbounded_String;
       Count : Natural := 0;
@@ -94,7 +84,6 @@ package body Data is
       return To_String (Repr);
    end To_String;
 
-   --------------------------------------------------
    function To_String (Vect : in Vector) return String is
       Repr : Unbounded_String;
       Count : Natural := 0;
@@ -113,10 +102,9 @@ package body Data is
       return To_String (Repr);
    end To_String;
 
-   --------------------------------------------------
-   -- Процедури введення даних із файлу
-   -- в матриці й вектори
-   --------------------------------------------------
+   -- Loads input data from file
+   -- Reads needed count of numbers,
+   -- skipping the rest of line after the non-digit char
    procedure Get (File : in File_Type; Matr : out Matrix) is
       J : Integer;
    begin
@@ -134,7 +122,6 @@ package body Data is
       end loop;
    end Get;
 
-   --------------------------------------------------
    procedure Get (File : in File_Type; Vect : out Vector) is
       J : Integer;
    begin
@@ -150,9 +137,8 @@ package body Data is
       end loop;
    end Get;
 
-   --------------------------------------------------
-   -- Матричні та векторні операції
-   --------------------------------------------------
+   -- Matrix and vector arithmetics
+   -- Implemented operation used in the lab only
    function Transpose (X : in Matrix) return Matrix is
       Res : Matrix;      
    begin
@@ -163,8 +149,7 @@ package body Data is
       end loop;
       return Res;
    end Transpose;
-
-   --------------------------------------------------
+   
    function "*" (Left : in Vector; Right : in Matrix)
       return Vector is
       Res : Vector (Left'Range);
@@ -179,8 +164,7 @@ package body Data is
       end loop;
       return Res;
    end "*";
-
-   --------------------------------------------------
+   
    function "+" (Left, Right : in Vector) return Vector is
       Res : Vector (Left'Range);
    begin
@@ -190,7 +174,6 @@ package body Data is
       return Res;
    end "+";
 
-   --------------------------------------------------
    function "*" (Left, Right : in Vector) return Integer is
       Res : Integer := 0;
    begin
@@ -199,8 +182,7 @@ package body Data is
       end loop;
       return Res;
    end "*";
-
-   --------------------------------------------------
+   
    function "*" (Left, Right : in Matrix) return Matrix is
       Res : Matrix;
       Prod : Integer;
@@ -217,21 +199,83 @@ package body Data is
       return Res;
    end "*";
 
-   --------------------------------------------------
-   -- Основні процедури задач
-   --------------------------------------------------
-   function Func1 (A, B, C : in Vector; MA, MD : in Matrix) return Integer is
-      (A * B) + C * (B * (MA * MD));
-   --------------------------------------------------
-   function Func2 (MK, MH, MF : in Matrix) return Matrix is
-      (Transpose ( MK ) * (MH * MF));
-   --------------------------------------------------
-   function Func3 (O, P : in Vector; MR, MS : in Matrix) return Vector is
-      Temp : Vector (0..Dimension-1);
+   -- Main task procedures
+   -- Gets the input data file name
+   procedure Func1 (File_Name : in String) is
+      A, B, C : Vector (0 .. Dimension-1);
+      MA, MD : Matrix;
+      File : File_Type;
    begin
-      Temp := O + P;
-      Sort (Temp);
-      return Temp * Transpose ( MR * MS );
+      if Generate then
+         Randomize (MA);
+         Randomize (MD);
+         Randomize (A);
+         Randomize (B);
+         Randomize (C);
+      else
+         Open (File, In_File, File_Name);
+
+         Get (File, A);
+         Get (File, B);
+         Get (File, C);
+         Get (File, MA);
+         Get (File, MD);
+
+         Close (File);
+      end if;
+
+      Put_line ("Task T1 results: " & 
+                Integer'Image ((A * B) + C * (B * (MA * MD))));
+   end Func1;
+
+   procedure Func2 (File_Name : in String)is
+      MK, MH, MF : Matrix;
+      File : File_Type;
+   begin
+      if Generate then
+         Randomize (MK);
+         Randomize (MH);
+         Randomize (MF);
+      else
+         Open (File, In_File, File_Name);
+
+         Get (File, MK);
+         Get (File, MH);
+         Get (File, MF);
+
+         Close (File);
+      end if;
+
+      Put_line ("Task T2 results:" & New_Line &
+                To_String (Transpose ( MK ) * (MH * MF)));
+   end Func2;
+
+   procedure Func3 (File_Name : in String) is
+      O, P: Vector (0 .. Dimension-1);
+      MR, MS : Matrix;
+      File : File_Type;
+   begin
+   if Generate then
+         Randomize (MR);
+         Randomize (MS);
+         Randomize (O);
+         Randomize (P);
+      else
+         Open (File, In_File, File_Name);
+
+         Get (File, O);
+         Get (File, P);
+         Get (File, MR);
+         Get (File, MS);
+
+         Close (File);
+      end if;
+
+      O := O + P;
+      Sort (O);
+
+      Put_line ("Task T3 results:" & New_Line & 
+                To_String (O * Transpose ( MR * MS )));
    end Func3;
 
 end Data;
