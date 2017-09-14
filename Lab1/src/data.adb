@@ -12,8 +12,6 @@ with Ada.IO_Exceptions;
 
 package body Data is
 
-   type Vector is array (Integer range <>) of Integer;
-   type Matrix is array (0 .. Dimension-1, 0 .. Dimension-1) of Integer;
    subtype Rand_Range is Integer range -100 .. 100;
 
    Dim : constant String := Dimension'Img (2 .. Dimension'Img'Length);
@@ -222,83 +220,18 @@ package body Data is
    --------------------------------------------------
    -- Основні процедури задач
    --------------------------------------------------
-   procedure Func1 (File_Name : in String) is
-      A, B, C : Vector (0 .. Dimension-1);
-      MA, MD : Matrix;
-      File : File_Type;
-   begin
-      if Generate then
-         Randomize (MA);
-         Randomize (MD);
-         Randomize (A);
-         Randomize (B);
-         Randomize (C);
-      else
-         Open (File, In_File, File_Name);
-
-         Get (File, A);
-         Get (File, B);
-         Get (File, C);
-         Get (File, MA);
-         Get (File, MD);
-
-         Close (File);
-      end if;
-
-      Put_line ("Task T1 results: " & 
-                Integer'Image ((A * B) + C * (B * (MA * MD))));
-   end Func1;
-
+   function Func1 (A, B, C : in Vector; MA, MD : in Matrix) return Integer is
+      (A * B) + C * (B * (MA * MD));
    --------------------------------------------------
-   procedure Func2 (File_Name : in String)is
-      MK, MH, MF : Matrix;
-      File : File_Type;
-   begin
-      if Generate then
-         Randomize (MK);
-         Randomize (MH);
-         Randomize (MF);
-      else
-         Open (File, In_File, File_Name);
-
-         Get (File, MK);
-         Get (File, MH);
-         Get (File, MF);
-
-         Close (File);
-      end if;
-
-      Put_line ("Task T2 results:" & New_Line &
-                To_String (Transpose ( MK ) * (MH * MF)));
-   end Func2;
-
+   function Func2 (MK, MH, MF : in Matrix) return Matrix is
+      (Transpose ( MK ) * (MH * MF));
    --------------------------------------------------
-   procedure Func3 (File_Name : in String) is
-      O, P: Vector (0 .. Dimension-1);
-      MR, MS : Matrix;
-      File : File_Type;
+   function Func3 (O, P : in Vector; MR, MS : in Matrix) return Vector is
+      Temp : Vector (0..Dimension-1);
    begin
-   if Generate then
-         Randomize (MR);
-         Randomize (MS);
-         Randomize (O);
-         Randomize (P);
-      else
-         Open (File, In_File, File_Name);
-
-         Get (File, O);
-         Get (File, P);
-         Get (File, MR);
-         Get (File, MS);
-
-         Close (File);
-      end if;
-
-      O := O + P;
-      Sort (O);
-
-      Put_line ("Task T3 results:" & New_Line & 
-                To_String (O * Transpose ( MR * MS )));
+      Temp := O + P;
+      Sort (Temp);
+      return Temp * Transpose ( MR * MS );
    end Func3;
 
 end Data;

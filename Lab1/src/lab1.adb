@@ -11,9 +11,10 @@ with Ada.Text_IO; use Ada.Text_IO;
 -- Точка входу
 --------------------------------------------------
 procedure Lab1 is
-   package Lab1Data is new Data (Dimension => 2,
-                                 Max_Output => 0,
-                                 Generate => false);
+   N : Integer := 2;
+   Generate : Boolean := False;
+   package Lab1Data is new Data (Dimension => N,
+                                 Max_Output => 0);
    use Lab1Data;
 
    task T1 is
@@ -22,11 +23,31 @@ procedure Lab1 is
       pragma CPU(1);
    end;
    task body T1 is
+      A, B, C : Vector (0 .. N-1);
+      MA, MD : Matrix;
+      File : File_Type;
    begin
-      Put_Line("T1 started");
-      delay 0.1;
-      Func1 ("Lab1/IO/T1.in");
-      delay 0.2;
+      Put_Line("T2 started");
+      if Generate then
+         Randomize (MA);
+         Randomize (MD);
+         Randomize (A);
+         Randomize (B);
+         Randomize (C);
+      else
+         Open (File, In_File, "Lab1/IO/T1.in");
+
+         Get (File, A);
+         Get (File, B);
+         Get (File, C);
+         Get (File, MA);
+         Get (File, MD);
+
+         Close (File);
+      end if;
+
+      Put_line ("Task T1 results: " & 
+                Integer'Image (Func1 (A, B, C, MA, MD)));
       Put_Line("T1 finished");
    end T1;
 
@@ -37,11 +58,26 @@ procedure Lab1 is
       pragma CPU(2);
    end;
    task body T2 is
+      MK, MH, MF : Matrix;
+      File : File_Type;
    begin
       Put_Line("T2 started");
-      delay 0.3;
-      Func2 ("Lab1/IO/T1.in");
-      delay 0.4;
+      if Generate then
+         Randomize (MK);
+         Randomize (MH);
+         Randomize (MF);
+      else
+         Open (File, In_File, "Lab1/IO/T2.in");
+
+         Get (File, MK);
+         Get (File, MH);
+         Get (File, MF);
+
+         Close (File);
+      end if;
+
+      Put_line ("Task T2 results:" & Character'Val(10) &
+                To_String (Func2 (MK, MH, MF)));
       Put_Line("T2 finished");
    end T2;
 
@@ -52,11 +88,30 @@ procedure Lab1 is
       pragma CPU(3);
    end;
    task body T3 is
+      O, P: Vector (0 .. N-1);
+      MR, MS : Matrix;
+      File : File_Type;
    begin
       Put_Line("T3 started");
-      delay 0.5;
-      Func3 ("Lab1/IO/T1.in");
-      delay 0.6;
+   if Generate then
+         Randomize (MR);
+         Randomize (MS);
+         Randomize (O);
+         Randomize (P);
+      else
+         Open (File, In_File, "Lab1/IO/T3.in");
+
+         Get (File, O);
+         Get (File, P);
+         Get (File, MR);
+         Get (File, MS);
+
+         Close (File);
+      end if;
+
+      Put_line ("Task T3 results:" & Character'Val(10) & 
+                To_String (Func3 (O, P, MR, MS)));
+
       Put_Line("T3 finished");
    end T3;
 
