@@ -17,7 +17,7 @@ procedure Lab1 is
    begin
       Put_Line("T1 started");
       delay 0.1;
-      Func1 ("Lab1/IO/T1.in");
+      Func1 ("IO/T1.in");
       delay 0.2;
       Put_Line("T1 finished");
    end T1;
@@ -31,7 +31,7 @@ procedure Lab1 is
    begin
       Put_Line("T2 started");
       delay 0.3;
-      Func2 ("Lab1/IO/T1.in");
+      Func2 ("IO/T1.in");
       delay 0.4;
       Put_Line("T2 finished");
    end T2;
@@ -45,7 +45,7 @@ procedure Lab1 is
    begin
       Put_Line("T3 started");
       delay 0.5;
-      Func3 ("Lab1/IO/T1.in");
+      Func3 ("IO/T1.in");
       delay 0.6;
       Put_Line("T3 finished");
    end T3;
