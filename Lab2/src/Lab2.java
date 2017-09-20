@@ -7,7 +7,7 @@ public class Lab2 {
 
 		System.out.println("Lab2 starterd");
 
-		int N = 1000;
+		int N = 3;
 		boolean auto = true;
 
 		Thread t1 = new T1("Thread1", Thread.MIN_PRIORITY, N, auto);
