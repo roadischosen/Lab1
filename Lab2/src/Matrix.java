@@ -1,5 +1,3 @@
-// package Data;
-
 import java.util.Scanner;
 
 public class Matrix {

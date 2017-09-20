@@ -1,5 +1,3 @@
-// import Data.Matrix;
-// import Data.Vector;
 
 public class Lab2 {
 
