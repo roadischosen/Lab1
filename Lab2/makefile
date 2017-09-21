@@ -1,9 +1,7 @@
-DIR = src
-
 lab2.jar:
-	javac -g $(DIR)/*.java
+	javac -g src/*.java
 	jar cfe lab2.jar Lab2 -C src/ .
-	@$(RM) $(DIR)/*.class
+	@$(RM) src/*.class
 
 run: lab2.jar
 	@java -jar lab2.jar
