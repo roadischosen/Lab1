@@ -6,3 +6,7 @@ Lab1/*.lst
 
 Lab2/lab2.jar
 Lab2/src/*.class
+
+Lab3/.vs/
+Lab3/bin/
+Lab3/obj/
