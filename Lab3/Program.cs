@@ -1,15 +1,17 @@
-﻿using System;
+using System;
 using System.Threading;
 /*
- * Лабораторна робота №3
- * Процеси в мові С#
- * Виконав: Земін В.М.
- * Група: ІО-53
+ * Laboratory work #3
+ * Threads in C#
+ * Author: Zemin V.M.
+ * Group: IO-53
  * 
- * Завдання:
+ * Tasks:
  * 1.18 -- d  = (A*B) + (C*(B*(MA*MD))
  * 2.06 -- MG = TRANS(MK) * (MH*MF)
  * 3.11 -- T  = SORT(O + P)*TRANS(MR*MS)
+ * 
+ * File: Matrix.cs
  */
 namespace Lab3
 {
@@ -43,9 +45,7 @@ namespace Lab3
             Console.ReadKey();
         }
 
-        /*
-         * Потокова функція процесу Т1
-         */
+
         static void T1(Object param)
         {
             Console.WriteLine(Thread.CurrentThread.Name + " started");
@@ -74,9 +74,7 @@ namespace Lab3
             Console.WriteLine(Thread.CurrentThread.Name + " finished");
         }
 
-        /*
-         * Потокова функція процесу Т2
-         */
+
         static void T2(Object param)
         {
             Console.WriteLine(Thread.CurrentThread.Name + " started");
@@ -101,9 +99,7 @@ namespace Lab3
             Console.WriteLine(Thread.CurrentThread.Name + " finished");
         }
 
-        /*
-         * Потокова функція процесу Т3
-         */
+
         static void T3(Object param)
         {
             Console.WriteLine(Thread.CurrentThread.Name + " started");

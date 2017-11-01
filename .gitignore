@@ -1,3 +1,6 @@
+**/report/**
+!**/report/*.tex
+
 Lab1/lab1
 Lab1/obj/
 Lab1/src/.#*

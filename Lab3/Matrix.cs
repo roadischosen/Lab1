@@ -1,14 +1,16 @@
-﻿using System;
+using System;
 /*
- * Лабораторна робота №3
- * Процеси в мові С#
- * Виконав: Земін В.М.
- * Група: ІО-53
+ * Laboratory work #3
+ * Threads in C#
+ * Author: Zemin V.M.
+ * Group: IO-53
  * 
- * Завдання:
+ * Tasks:
  * 1.18 -- d  = (A*B) + (C*(B*(MA*MD))
  * 2.06 -- MG = TRANS(MK) * (MH*MF)
  * 3.11 -- T  = SORT(O + P)*TRANS(MR*MS)
+ * 
+ * File: Matrix.cs
  */
 namespace Lab3
 {
@@ -24,7 +26,7 @@ namespace Lab3
             this.data = new int[n, n];
         }
 
-        // Множення матриць
+        // Matrix product
         public Matrix mul(Matrix mr)
         {
             Matrix result = new Matrix(n);
@@ -42,7 +44,7 @@ namespace Lab3
             return result;
         }
 
-        // Транспонування
+        // Transposing
         public Matrix transp()
         {
             Matrix result = new Matrix(n);
@@ -56,7 +58,7 @@ namespace Lab3
             return result;
         }
 
-        // Ввід тестових даних
+        // Test data input
         public void input()
         {
             for (int i = 0; i < n; i++)
@@ -68,7 +70,7 @@ namespace Lab3
             }
         }
 
-        // Рядкове представлення
+        // String reprezentation
         public String toString()
         {
             String result = "";

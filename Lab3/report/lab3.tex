@@ -1,0 +1,57 @@
+\documentclass{article}
+\usepackage{cmap}
+\usepackage[utf8]{inputenc}
+\usepackage[english,ukrainian]{babel}
+\usepackage[a4paper, mag=1000, left=2.5cm, right=1cm, top=2cm, bottom=1cm, headsep=0.7cm]{geometry}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage[T1]{fontenc}
+\usepackage{PTMono}
+
+\pagenumbering{gobble}
+
+\begin{document}
+    \begin{center}
+
+        \large НАЦІОНАЛЬНИЙ ТЕХНІЧНИЙ УНІВЕРСИТЕТ УКРАЇНИ
+        «КИЇВСЬКИЙ ПОЛІТЕХНІЧНИЙ ІНСТИТУТ» ІМ.ІГОРЯ СІКОРСЬКОГО\\
+        ФАКУЛЬТЕТ ІНФОРМАТИКИ І ОБЧИСЛЮВАЛЬНОЇ ТЕХНІКИ
+        КАФЕДРА ОБЧИСЛЮВАЛЬНОЇ ТЕХНІКИ \\[5.5cm]
+    
+        \huge Лабораторна робота №3 \\[0.6cm]
+        \large з дисципліни «Паралельні та розподілені обчислення»\\
+        \large на тему: «Процеси в мові C\#»\\[3.5cm]
+    
+    \end{center}
+    
+    \begin{flushright}
+        \large
+        Виконав:\\
+        студент гр. IO-53 \\
+        Земiн Володимир \\
+        ЗК №5310\\
+        Перевірив:\\
+        Корочкін О.В.
+    \end{flushright}
+    
+    
+    \vfill
+    
+    \begin{center}
+        \large Київ --- \the\year р.
+    \end{center}
+    
+    \newpage
+    \section*{Лістинг програми:}
+    \lstset{
+      basicstyle=\ttfamily,
+      columns=fullflexible,
+      breaklines=true,
+      numbers=left,
+      postbreak=\mbox{$\hookrightarrow$}\space
+    }
+    \texttt{\small \lstinputlisting[language={[Sharp]C}]{../Program.cs}
+                   \lstinputlisting[language={[Sharp]C}]{../Matrix.cs}
+                   \lstinputlisting[language={[Sharp]C}]{../Vector.cs}}
+
+\end{document}

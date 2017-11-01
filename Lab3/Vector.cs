@@ -1,14 +1,16 @@
-﻿using System;
+using System;
 /*
- * Лабораторна робота №3
- * Процеси в мові С#
- * Виконав: Земін В.М.
- * Група: ІО-53
+ * Laboratory work #3
+ * Threads in C#
+ * Author: Zemin V.M.
+ * Group: IO-53
  * 
- * Завдання:
+ * Tasks:
  * 1.18 -- d  = (A*B) + (C*(B*(MA*MD))
  * 2.06 -- MG = TRANS(MK) * (MH*MF)
  * 3.11 -- T  = SORT(O + P)*TRANS(MR*MS)
+ * 
+ * File: Matrix.cs
  */
 namespace Lab3
 {
@@ -24,7 +26,7 @@ namespace Lab3
             this.data = new int[n];
         }
 
-        // Скалярний добуток
+        // Scalar product
         public int mul(Vector vr)
         {
             int result = 0;
@@ -37,7 +39,7 @@ namespace Lab3
             return result;
         }
 
-        // Множення на матрицю
+        // Matrix and vector product
         public Vector mul(Matrix mr)
         {
             Vector result = new Vector(n);
@@ -52,7 +54,7 @@ namespace Lab3
             return result;
         }
 
-        // Сума векторів
+        // Vector sum
         public Vector add(Vector vr)
         {
             Vector result = new Vector(n);
@@ -65,14 +67,14 @@ namespace Lab3
             return result;
         }
 
-        // Сортування вектору
+        // Vector sort
         public Vector sort()
         {
             Array.Sort(this.data);
             return this;
         }
 
-        // Заповнення тестовими даними
+        // Test data input
         public void input()
         {
             for (int i = 0; i < n; i++)
@@ -81,7 +83,7 @@ namespace Lab3
             }
         }
 
-        // Рядкове представлення
+        // String reprezentation
         public String toString()
         {
             String result = "";
