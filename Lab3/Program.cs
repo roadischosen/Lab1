@@ -90,7 +90,7 @@ namespace Lab3
             MF.input();
 
             Matrix result = MK.transp().mul(MH.mul(MF));
-            if (n < 5)
+            if (n <= 5)
             {
                 Console.WriteLine(Thread.CurrentThread.Name + " results:\n" + result.toString());
             }
@@ -121,7 +121,7 @@ namespace Lab3
             O.sort();
             Vector result = O.mul(MR.mul(MS).transp());
 
-            if (n < 5)
+            if (n <= 5)
             {
                 Console.WriteLine(Thread.CurrentThread.Name + " results:\n" + result.toString());
             }
