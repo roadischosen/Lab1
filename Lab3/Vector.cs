@@ -10,7 +10,7 @@ using System;
  * 2.06 -- MG = TRANS(MK) * (MH*MF)
  * 3.11 -- T  = SORT(O + P)*TRANS(MR*MS)
  * 
- * File: Matrix.cs
+ * File: Vector.cs
  */
 namespace Lab3
 {
