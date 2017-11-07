@@ -70,7 +70,7 @@ namespace Lab3
             }
         }
 
-        // String reprezentation
+        // String representation
         public String toString()
         {
             String result = "";

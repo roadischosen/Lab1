@@ -1,5 +1,5 @@
-**/report/**
-!**/report/*.tex
+reports/**
+!reports/*.tex
 
 Lab1/lab1
 Lab1/obj/
@@ -10,6 +10,8 @@ Lab1/*.lst
 Lab2/lab2.jar
 Lab2/src/*.class
 
-Lab3/.vs/
-Lab3/bin/
-Lab3/obj/
+**/.vs/
+**/bin/
+**/obj/
+**/Debug/
+**/x64/
