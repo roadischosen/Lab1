@@ -1,16 +1,16 @@
 /*
-* Laboratory work #5
-* Threads in OpenMP
-* Author: Zemin V.M.
-* Group: IO-53
-*
-* Tasks:
-* 1.18 -- d  = (A*B) + (C*(B*(MA*MD))
-* 2.06 -- MG = TRANS(MK) * (MH*MF)
-* 3.11 -- T  = SORT(O + P)*TRANS(MR*MS)
-*
-* File: data.h
-*/
+ * Laboratory work #5
+ * Threads in OpenMP
+ * Author: Zemin V.M.
+ * Group: IO-53
+ * 
+ * Tasks:
+ * 1.18 -- d  = (A*B) + (C*(B*(MA*MD))
+ * 2.06 -- MG = TRANS(MK) * (MH*MF)
+ * 3.11 -- T  = SORT(O + P)*TRANS(MR*MS)
+ * 
+ * File: data.h
+ */
 #pragma once
 #include <string>
 #include <algorithm>

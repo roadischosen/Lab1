@@ -17,6 +17,7 @@
 
 void T1(LPVOID parameter) {
 	std::cout << "Thread 1 started\n";
+    Sleep(1);
 
 	size_t n = (size_t)parameter;
 
@@ -50,11 +51,13 @@ void T1(LPVOID parameter) {
 	delete[] mp;
 	delete[] vmp;
 
+    Sleep(1);
 	std::cout << "Thread 1 finished\n";
 }
 
 void T2(LPVOID parameter) {
 	std::cout << "Thread 2 started\n";
+    Sleep(1);
 
 	size_t n = (size_t)parameter;
 
@@ -82,11 +85,13 @@ void T2(LPVOID parameter) {
 	delete[] MF;
 	delete[] mp;
 
+    Sleep(1);
 	std::cout << "Thread 2 finished\n";
 }
 
 void T3(LPVOID parameter) {
 	std::cout << "Thread 3 started\n";
+    Sleep(1);
 
 	size_t n = (size_t)parameter;
 
@@ -120,6 +125,7 @@ void T3(LPVOID parameter) {
 	delete[] O;
 	delete[] mp;
 
+    Sleep(1);
 	std::cout << "Thread 3 finished\n";
 }
 
